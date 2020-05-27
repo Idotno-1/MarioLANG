@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <map>
 
 namespace interpretor
 {
@@ -13,12 +13,12 @@ namespace interpretor
         void decrease_cursor();
 
         void increase_value();
-        void decrease_valie();
+        void decrease_value();
+
+        size_t get_value();
 
     private:
-        std::vector<size_t> pos_;
-        std::vector<size_t> neg_;
-
+        std::map<int, size_t> memory_;
         int cursor_;
     };
 } // namespace interpretor

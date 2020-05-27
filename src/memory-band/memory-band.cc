@@ -1,4 +1,29 @@
 #include "memory-band.hh"
 
 namespace interpretor
-{}
+{
+    void MemoryBand::increase_cursor()
+    {
+        ++cursor_;
+    }
+
+    void MemoryBand::decrease_cursor()
+    {
+        --cursor_;
+    }
+
+    void MemoryBand::increase_value()
+    {
+        memory_[cursor_]++;
+    }
+
+    void MemoryBand::decrease_value()
+    {
+        memory_[cursor_]--;
+    }
+
+    size_t MemoryBand::get_value()
+    {
+        return memory_[cursor_];
+    }
+} // namespace interpretor

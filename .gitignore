@@ -31,3 +31,6 @@
 *.out
 *.app
 *MarioLANG
+
+# Other
+.clang-format

@@ -2,18 +2,19 @@ CXX=g++
 CXXFLAGS=-std=c++17 -pedantic -Wall -Wextra -Werror
 
 BIN=MarioLANG
-INSTALL_NAME=mariolang
-DEP=src/main.c
+INSTALL=mariolang
+SRCS=src/main.cc src/level/level.cc src/mario/mario.cc src/memory-band/memory_band.cc
+OBJS=$(subst .cc,.o,$(SRCS))
 
 .PHONY: all install clean
 
 all: ${BIN}
 
-${BIN}: ${DEP}
-	${CXX} ${CXXFLAGS} -o ${BIN} ${DEP}
+${BIN}: ${OBJS}
+	${CXX} ${CXXFLAGS} -o ${BIN} ${OBJS}
 
 install: ${BIN}
-	install ${BIN} /usr/local/bin/${INSTALL_NAME}
+	install ${BIN} /usr/local/bin/${INSTALL}
 
 clean:
-	${RM} ${BIN}
+	${RM} ${BIN} ${OBJS}

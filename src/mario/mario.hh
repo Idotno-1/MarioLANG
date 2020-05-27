@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace interpretor
 {
     enum Direction
@@ -9,18 +11,17 @@ namespace interpretor
         IDLE
     };
 
-    class Mario
+    struct Mario
     {
-    public:
-        Mario(int x, int y);
+        Mario();
 
-    private:
-        int pos_x_;
-        int pos_y_;
+        unsigned pos_x_;
+        unsigned pos_y_;
 
         Direction dir_;
 
-        bool walking_;
-        bool falling_;
+        bool flying_;
+
+        void toggle_dir();
     };
 } // namespace interpretor

@@ -205,7 +205,8 @@ namespace interpretor
                          || board_[i][j] == ',' || board_[i][j] == ';')
                     std::cout << F_CYAN;
                 else if (board_[i][j] == '^' || board_[i][j] == '!'
-                         || board_[i][j] == '[' || board_[i][j] == '@')
+                         || board_[i][j] == '[' || board_[i][j] == '@'
+                         || board_[i][j] == '>' || board_[i][j] == '<')
                     std::cout << F_YELLOW;
 
                 std::cout << board_[i][j] << RST;

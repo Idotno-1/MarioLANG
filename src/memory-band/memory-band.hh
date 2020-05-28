@@ -16,12 +16,12 @@ namespace interpretor
         void increase_value();
         void decrease_value();
 
-        size_t get_value();
+        int get_value();
 
         void display();
 
     private:
-        std::map<int, size_t> memory_;
+        std::map<int, int> memory_;
         int cursor_;
     };
 } // namespace interpretor

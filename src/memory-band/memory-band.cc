@@ -22,7 +22,7 @@ namespace interpretor
         memory_[cursor_]--;
     }
 
-    size_t MemoryBand::get_value()
+    int MemoryBand::get_value()
     {
         return memory_[cursor_];
     }

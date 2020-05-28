@@ -38,6 +38,25 @@ namespace interpretor
 
     bool Level::set_start()
     {
+        if (!board_.size())
+            return true;
+
+        for (size_t x = 0; x < board_[0].size(); x++)
+        {
+            for (size_t y = 0; y < board_.size(); y++)
+                if (board_[y][x] == '=' || board_[y][x] == '\"'
+                    || board_[y][x] == '|' || board_[y][x] == '#')
+                {
+                    if (y == 0)
+                        return false;
+
+                    mario_.pos_x_ = x;
+                    mario_.pos_y_ = y - 1;
+
+                    return true;
+                }
+        }
+
         return true;
     }
 

@@ -58,10 +58,10 @@ namespace interpretor
     bool Level::handle_pos()
     {
         char pos = board_[mario_.pos_y_][mario_.pos_x_];
-
+        const std::string tokens = "=|#\")(+-.:,;<>^![@";
         // handle skip
 
-        if (mario_.skip_)
+        if (mario_.skip_ && tokens.find(pos) != std::string::npos)
         {
             mario_.skip_ = false;
             return true;

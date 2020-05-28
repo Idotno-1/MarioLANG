@@ -28,44 +28,19 @@ namespace interpretor
         for (size_t i = 0; i < board_.size(); i++)
             board_[i].resize(max_x, ' ');
 
-        return set_start();
+        return board_.size() || !board_[0].size();
     }
 
     bool Level::play()
     {
-        if (!board_.size())
+        if (!board_.size() || !board_[0].size())
             return false;
 
-        handle_pos();
+        apply_gravity();
 
         while (true)
             if (!do_move() || !apply_gravity() || !handle_pos())
                 return false;
-
-        return true;
-    }
-
-    bool Level::set_start()
-    {
-        if (!board_.size())
-            return true;
-
-        for (size_t x = 0; x < board_[0].size(); x++)
-        {
-            for (size_t y = 0; y < board_.size(); y++)
-                if (board_[y][x] == '=' || board_[y][x] == '\"'
-                    || board_[y][x] == '|' || board_[y][x] == '#')
-                {
-                    if (y == 0)
-                        return false;
-
-                    mario_.pos_x_ = x;
-                    mario_.pos_y_ = y - 1;
-                    mario_.dir_ = Direction::RIGHT;
-
-                    return true;
-                }
-        }
 
         return true;
     }
@@ -189,7 +164,7 @@ namespace interpretor
             return false;
 
         if (direction == 1)
-            mario_.pos_y_ -= 2;
+            mario_.pos_y_ += 2;
 
         while (board_[mario_.pos_y_ + 1][mario_.pos_x_] != '\"')
         {
@@ -218,6 +193,7 @@ namespace interpretor
 
     void Level::display()
     {
+        // return;
         usleep(100000);
 
         if (!board_.size())

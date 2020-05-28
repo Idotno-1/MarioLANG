@@ -37,8 +37,6 @@ namespace interpretor
         MemoryBand memory_;
         std::vector<std::string> board_;
 
-        bool set_start();
-
         bool do_move();
         bool handle_pos();
         bool apply_gravity();

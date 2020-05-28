@@ -6,9 +6,9 @@ namespace interpretor
 {
     enum Direction
     {
-        RIGHT,
-        LEFT,
-        IDLE
+        RIGHT = 1,
+        LEFT = -1,
+        IDLE = 0
     };
 
     struct Mario
@@ -21,7 +21,9 @@ namespace interpretor
         Direction dir_;
 
         bool flying_;
+        bool skip_;
 
         void toggle_dir();
+        bool is_stuck();
     };
 } // namespace interpretor

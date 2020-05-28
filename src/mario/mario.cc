@@ -7,9 +7,10 @@ namespace interpretor
         pos_x_ = 0;
         pos_y_ = 0;
 
-        dir_ = Direction::RIGHT;
+        dir_ = Direction::IDLE;
 
         flying_ = false;
+        skip_ = false;
     }
 
     void Mario::toggle_dir()
@@ -18,8 +19,7 @@ namespace interpretor
             dir_ = Direction::LEFT;
         else if (dir_ == Direction::LEFT)
             dir_ = Direction::RIGHT;
-        else
-            std::cerr
-                << "[DIR] Mario is currently idle. Cannot toggle direction";
+
+        // [DIR] Mario is currently idle. Cannot toggle direction;
     }
 } // namespace interpretor

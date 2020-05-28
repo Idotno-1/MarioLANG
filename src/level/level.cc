@@ -112,8 +112,44 @@ namespace interpretor
             mario_.dir_ = Direction::IDLE;
         else if (pos == '^')
         {
-            mario_.dir_ = Direction::IDLE; // FIXME
-            mario_.pos_x_++;
+            mario_.dir_ = Direction::IDLE;
+
+            display();
+            if (mario_.pos_y_ == 0)
+                return false; // Blocked
+
+            mario_.pos_y_--;
+
+            if (board_[mario_.pos_y_][mario_.pos_x_] == '>')
+            {
+                mario_.dir_ = Direction::RIGHT;
+                display();
+                if (!is_solid(mario_.pos_y_, mario_.pos_x_ + 1))
+                {
+                    mario_.pos_x_++;
+                    return handle_pos();
+                }
+                else
+                    mario_.pos_y_++;
+            }
+            else if (board_[mario_.pos_y_][mario_.pos_x_] == '<')
+            {
+                mario_.dir_ = Direction::LEFT;
+                display();
+                if (!is_solid(mario_.pos_y_, mario_.pos_x_ - 1))
+                {
+                    mario_.pos_x_--;
+                    return handle_pos();
+                }
+                else
+                    mario_.pos_y_++;
+            }
+            else
+            {
+                mario_.dir_ = Direction::IDLE;
+                mario_.pos_y_++;
+                return false;
+            }
         }
         else if (pos == '@')
             mario_.toggle_dir();

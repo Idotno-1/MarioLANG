@@ -100,7 +100,7 @@ namespace interpretor
         else if (pos == '.')
             std::cout << memory_.get_value() % 256;
         else if (pos == ':')
-            std::cout << memory_.get_value();
+            std::cout << memory_.get_value() << ' ';
         else if (pos == ',')
             std::cout << "TODO";
         else if (pos == ';')

@@ -36,6 +36,7 @@ namespace interpretor
         if (!board_.size() || !board_[0].size())
             return false;
 
+        handle_pos();
         apply_gravity();
 
         while (true)

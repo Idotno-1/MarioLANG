@@ -1,7 +1,5 @@
 #include "level.hh"
 
-#include <unistd.h>
-
 namespace interpretor
 {
     bool Level::load(std::string path)
@@ -75,7 +73,7 @@ namespace interpretor
     bool Level::is_solid(int y, int x)
     {
         if (x < 0 || y < 0 || y >= (int)board_.size()
-            || x >= (int)board_[0].size()) // FIXME verif if board ?
+            || x >= (int)board_[0].size())
             return true;
 
         return board_[y][x] == '=' || board_[y][x] == '|' || board_[y][x] == '#'
@@ -113,6 +111,7 @@ namespace interpretor
                 if (!is_solid(mario_.pos_y_, mario_.pos_x_ - 1))
                 {
                     mario_.pos_x_--;
+                    return handle_pos();
                 }
                 else
                     return false;
@@ -125,7 +124,10 @@ namespace interpretor
             {
                 display();
                 if (!is_solid(mario_.pos_y_, mario_.pos_x_ + 1))
+                {
                     mario_.pos_x_++;
+                    return handle_pos();
+                }
                 else
                     return false;
             }
@@ -162,6 +164,41 @@ namespace interpretor
 
         mario_.pos_x_ += mario_.dir_;
 
+        // Elevator
+        if (mario_.dir_ == Direction::IDLE
+            && board_[mario_.pos_y_ + 1][mario_.pos_x_] == '#')
+        {
+            int direction = 0;
+
+            for (size_t i = 1; i < board_.size(); ++i)
+                if (board_[i][mario_.pos_x_] == '\"')
+                {
+                    direction = i > mario_.pos_y_ ? 1 : -1;
+                    break;
+                }
+
+            return apply_elevator(direction);
+        }
+
+        return true;
+    }
+
+    bool Level::apply_elevator(int direction)
+    {
+        if (!direction)
+            return false;
+
+        if (direction == 1)
+            mario_.pos_y_ -= 2;
+
+        while (board_[mario_.pos_y_ + 1][mario_.pos_x_] != '\"')
+        {
+            if (!handle_pos() && board_[mario_.pos_y_][mario_.pos_x_] != '\"')
+                return false;
+
+            mario_.pos_y_ += direction;
+        }
+
         return true;
     }
 
@@ -181,7 +218,8 @@ namespace interpretor
 
     void Level::display()
     {
-        return;
+        usleep(100000);
+
         if (!board_.size())
         {
             std::cout << "# No map loaded #\n";
@@ -232,6 +270,6 @@ namespace interpretor
         std::cout << std::endl;
         memory_.display();
 
-        sleep(1);
+        usleep(500);
     }
 } // namespace interpretor

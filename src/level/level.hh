@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
 #include "../mario/mario.hh"
@@ -41,6 +42,7 @@ namespace interpretor
         bool do_move();
         bool handle_pos();
         bool apply_gravity();
+        bool apply_elevator(int direction);
 
         bool is_solid(int y, int x);
     };

@@ -61,6 +61,12 @@ namespace interpretor
 
         // handle skip
 
+        if (mario_.skip_)
+        {
+            mario_.skip_ = false;
+            return true;
+        }
+
         if (pos == '+')
             memory_.increase_value();
         else if (pos == '-')
@@ -154,9 +160,6 @@ namespace interpretor
             mario_.toggle_dir();
         else if (pos == '[')
         {
-            if (mario_.dir_ == Direction::IDLE)
-                return false;
-
             if (!memory_.get_value())
                 mario_.skip_ = true;
         }
@@ -230,7 +233,7 @@ namespace interpretor
     void Level::display()
     {
         // return;
-        usleep(100000);
+        usleep(50000);
 
         if (!board_.size())
         {

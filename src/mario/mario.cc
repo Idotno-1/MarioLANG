@@ -9,7 +9,6 @@ namespace interpretor
 
         dir_ = Direction::RIGHT;
 
-        flying_ = false;
         skip_ = false;
     }
 

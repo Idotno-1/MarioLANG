@@ -20,7 +20,6 @@ namespace interpretor
 
         Direction dir_;
 
-        bool flying_;
         bool skip_;
 
         void toggle_dir();

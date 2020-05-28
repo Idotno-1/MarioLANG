@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <map>
 
 namespace interpretor
@@ -16,6 +17,8 @@ namespace interpretor
         void decrease_value();
 
         size_t get_value();
+
+        void display();
 
     private:
         std::map<int, size_t> memory_;

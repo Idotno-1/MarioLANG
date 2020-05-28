@@ -26,4 +26,12 @@ namespace interpretor
     {
         return memory_[cursor_];
     }
+
+    void MemoryBand::display()
+    {
+        for (int i = cursor_ - 3; i <= cursor_ + 3; ++i)
+            std::cout << (i == cursor_ ? "-> " : "   ") << i
+                      << "\t = " << memory_[i] << std::endl;
+    }
+
 } // namespace interpretor

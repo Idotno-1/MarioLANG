@@ -35,17 +35,16 @@ namespace interpretor
 
     bool Level::play()
     {
+        if (!board_.size())
+            return false;
+
         handle_pos();
 
         while (true)
-        {
             if (!do_move() || !apply_gravity() || !handle_pos())
                 return false;
 
-            sleep(1);
-        }
-
-        return false;
+        return true;
     }
 
     bool Level::set_start()
@@ -108,19 +107,28 @@ namespace interpretor
         else if (pos == '<')
         {
             mario_.dir_ = Direction::LEFT;
-
-            if (!is_solid(mario_.pos_y_, mario_.pos_x_ - 1))
-                mario_.pos_x_--;
-            else
-                return false;
+            if (is_solid(mario_.pos_y_ + 1, mario_.pos_x_))
+            {
+                display();
+                if (!is_solid(mario_.pos_y_, mario_.pos_x_ - 1))
+                {
+                    mario_.pos_x_--;
+                }
+                else
+                    return false;
+            }
         }
         else if (pos == '>')
         {
             mario_.dir_ = Direction::RIGHT;
-            if (!is_solid(mario_.pos_y_, mario_.pos_x_ + 1))
-                mario_.pos_x_++;
-            else
-                return false;
+            if (is_solid(mario_.pos_y_ + 1, mario_.pos_x_))
+            {
+                display();
+                if (!is_solid(mario_.pos_y_, mario_.pos_x_ + 1))
+                    mario_.pos_x_++;
+                else
+                    return false;
+            }
         }
         else if (pos == '!')
             mario_.dir_ = Direction::IDLE;
@@ -149,7 +157,6 @@ namespace interpretor
 
     bool Level::do_move()
     {
-        // Check walls
         if (is_solid(mario_.pos_y_, mario_.pos_x_ + mario_.dir_))
             return false;
 
@@ -174,11 +181,14 @@ namespace interpretor
 
     void Level::display()
     {
+        return;
         if (!board_.size())
         {
             std::cout << "# No map loaded #\n";
             return;
         }
+
+        std::cout << std::endl;
 
         for (size_t i = 0; i < board_[0].size() + 2; ++i)
             std::cout << (i == board_[0].size() + 1 ? " \x1B[0m\n"
@@ -221,5 +231,7 @@ namespace interpretor
 
         std::cout << std::endl;
         memory_.display();
+
+        sleep(1);
     }
 } // namespace interpretor

@@ -76,7 +76,7 @@ namespace interpretor
         else if (pos == ')')
             memory_.increase_cursor();
         else if (pos == '.')
-            std::cout << memory_.get_value() % 256;
+            std::cout << (char)(memory_.get_value() % 256);
         else if (pos == ':')
             std::cout << memory_.get_value() << ' ';
         else if (pos == ',')
@@ -232,8 +232,8 @@ namespace interpretor
 
     void Level::display()
     {
-        // return;
-        usleep(50000);
+        return;
+        usleep(80000);
 
         if (!board_.size())
         {

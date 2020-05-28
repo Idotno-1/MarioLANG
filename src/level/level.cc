@@ -48,8 +48,7 @@ namespace interpretor
 
     bool Level::is_solid(int y, int x)
     {
-        if (x < 0 || y < 0 || y >= (int)board_.size()
-            || x >= (int)board_[0].size())
+        if (x < 0 || y < 0 || x >= (int)board_[0].size())
             return true;
 
         return board_[y][x] == '=' || board_[y][x] == '|' || board_[y][x] == '#'
@@ -216,7 +215,7 @@ namespace interpretor
 
     bool Level::apply_gravity()
     {
-        while (mario_.pos_y_ < board_.size() - 1
+        while (mario_.pos_y_ < board_.size()
                && !is_solid(mario_.pos_y_ + 1, mario_.pos_x_))
         {
             if (!handle_pos())
@@ -225,7 +224,7 @@ namespace interpretor
             mario_.pos_y_++;
         }
 
-        return true;
+        return mario_.pos_y_ < board_.size();
     }
 
     void Level::display()

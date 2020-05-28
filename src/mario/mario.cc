@@ -7,7 +7,7 @@ namespace interpretor
         pos_x_ = 0;
         pos_y_ = 0;
 
-        dir_ = Direction::IDLE;
+        dir_ = Direction::RIGHT;
 
         flying_ = false;
         skip_ = false;

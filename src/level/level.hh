@@ -37,6 +37,11 @@ namespace interpretor
         std::vector<std::string> board_;
 
         bool set_start();
-        bool do_move(int x, int y);
+
+        bool do_move();
+        bool handle_pos();
+        bool apply_gravity();
+
+        bool is_solid(int y, int x);
     };
 } // namespace interpretor

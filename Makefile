@@ -3,7 +3,12 @@ CXXFLAGS=-std=c++17 -pedantic -Wall -Wextra -Werror
 
 BIN=MarioLANG
 INSTALL=mariolang
-SRCS=src/main.cc src/level/level.cc src/mario/mario.cc src/memory-band/memory-band.cc
+SRCS=	src/main.cc \
+		src/level/level.cc \
+		src/mario/mario.cc \
+		src/memory-band/memory-band.cc \
+		src/option/option.cc
+
 OBJS=$(subst .cc,.o,$(SRCS))
 
 .PHONY: all install clean

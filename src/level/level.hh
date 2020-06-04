@@ -28,6 +28,13 @@ namespace interpretor
     public:
         Level() = default;
 
+        Level(bool display, int delay)
+            : Level()
+        {
+            display_ = display;
+            delay_ = delay < 0 ? 80 : delay;
+        }
+
         bool load(std::string path);
         bool play();
         void display();
@@ -36,6 +43,8 @@ namespace interpretor
         Mario mario_;
         MemoryBand memory_;
         std::vector<std::string> board_;
+        bool display_;
+        int delay_;
 
         bool do_move();
         bool handle_pos();

@@ -237,8 +237,10 @@ namespace interpretor
 
     void Level::display()
     {
-        return;
-        usleep(80000);
+        if (!display_)
+            return;
+
+        usleep(delay_ * 1000);
 
         if (!board_.size())
         {

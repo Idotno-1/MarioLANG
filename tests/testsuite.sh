@@ -3,7 +3,7 @@
 TOTAL=0
 VALIDATED=0
 
-for entry in 'tests/in/*'
+for entry in 'tests/*'
 do
     NOPATH1=$(basename -- "$entry")
 

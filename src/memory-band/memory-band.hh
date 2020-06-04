@@ -17,6 +17,7 @@ namespace interpretor
         void decrease_value();
 
         int get_value();
+        void set_value(int value);
 
         void display();
 

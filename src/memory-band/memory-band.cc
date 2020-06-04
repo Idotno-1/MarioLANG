@@ -27,6 +27,11 @@ namespace interpretor
         return memory_[cursor_];
     }
 
+    void MemoryBand::set_value(int value)
+    {
+        memory_[cursor_] = value;
+    }
+
     void MemoryBand::display()
     {
         for (int i = cursor_ - 3; i <= cursor_ + 3; ++i)

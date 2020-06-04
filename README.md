@@ -2,20 +2,26 @@
 
 A MarioLANG Interpretor made in C++.
 
-To learn more about this language, [here](http://esolangs.org/wiki/MarioLANG) is the wiki.
+![Animation Exemple](static/prologin.gif)
+
+To learn more about this language, [here](https://esolangs.org/wiki/MarioLANG) is the wiki.
 
 ## Usage
 
 ```bash
 make
-./MarioLANG [FILE]
+./MarioLANG [FILE] [-a|--animate] [-d <time>]
 ```
+
+- **FILE**: a text file containing MarioLANG code.
+- **-a**: display the code while being interpreted, and the memory tape. Disabled by default.
+- **-d \<time\>**: wait \<time\> milliseconds before evaluating next step. Only works when **-a** is activated. Default value is `100`.
 
 ## Install
 
 ```bash
 sudo make install # Installation might require root permission
-mariolang [FILE]
+mariolang [FILE] [-a|--animate] [-d <time>]
 ```
 
 ## Files

@@ -14,7 +14,7 @@ make
 ## Install
 
 ```bash
-make install
+sudo make install # Installation might require root permission
 mariolang [FILE]
 ```
 
@@ -22,4 +22,4 @@ mariolang [FILE]
 
 The `src/` directory contains the source code of the interpreter.
 
-In the `tests/` directory, you can find `.mlg` files, which are sample codes in MarioLANG. The expected output of each file is located in `tests/out/`
+In the `tests/` directory, you can find `.mlg` files, which are sample codes in MarioLANG. The expected output of each file is located in `tests/out/`.

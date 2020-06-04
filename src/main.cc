@@ -11,7 +11,8 @@ int main(int argc, char* argv[])
     if (!options.has_value())
         return 1;
 
-    interpretor::Level level = interpretor::Level();
+    interpretor::Level level =
+        interpretor::Level(options.value().display_, options.value().delay_);
 
     if (level.load(options.value().path_))
         level.play();

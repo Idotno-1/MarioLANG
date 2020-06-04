@@ -4,16 +4,50 @@ namespace option_parser
 {
     std::optional<Options> parse_options(int argc, char* argv[])
     {
-        if (argc < 2)
+        const std::string display1 = "--animate";
+        const std::string display2 = "-a";
+        const std::string delay = "-d";
+
+        Options options = Options();
+        bool got_required = false;
+
+        int i = 1;
+        while (i < argc)
+        {
+            if (!display1.compare(argv[i]) || !display2.compare(argv[i]))
+                options.display_ = true;
+            else if (!delay.compare(argv[i]))
+            {
+                if (i == argc - 1)
+                {
+                    std::cerr << "Missing operand for optional argument "
+                                 "\"-d\"\n. Default selected.";
+
+                    options.delay_ = -1;
+                }
+                else
+                {
+                    ++i;
+                    std::stringstream delay_value(argv[i]);
+                    delay_value >> options.delay_;
+                }
+            }
+            else if (!got_required && argv[i][0] != '-')
+            {
+                options.path_ = argv[i];
+                got_required = true;
+            }
+
+            ++i;
+        }
+
+        if (!got_required)
         {
             std::cerr << "Missing required argument \"path\".\n";
             return {};
         }
 
-        Options options = Options();
-
-        options.path_ = argv[1];
-
         return options;
     }
+
 } // namespace option_parser

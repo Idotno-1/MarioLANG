@@ -26,13 +26,14 @@ namespace interpretor
     class Level
     {
     public:
-        Level() = default;
-
         Level(bool display, int delay)
-            : Level()
         {
             display_ = display;
-            delay_ = delay < 0 ? 80 : delay;
+            delay_ = delay < 0 ? 100 : delay;
+
+            mario_ = Mario();
+            memory_ = MemoryBand();
+            board_ = std::vector<std::string>();
         }
 
         bool load(std::string path);

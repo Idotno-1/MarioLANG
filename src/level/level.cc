@@ -59,13 +59,14 @@ namespace interpretor
     {
         char pos = board_[mario_.pos_y_][mario_.pos_x_];
         const std::string tokens = "=|#\")(+-.:,;<>^![@";
-        // handle skip
 
         if (mario_.skip_ && tokens.find(pos) != std::string::npos)
         {
             mario_.skip_ = false;
             return true;
         }
+
+        // FIXME : update to switch
 
         if (pos == '+')
             memory_.increase_value();
@@ -80,9 +81,13 @@ namespace interpretor
         else if (pos == ':')
             std::cout << memory_.get_value() << ' ';
         else if (pos == ',')
-            std::cout << "TODO";
+            memory_.set_value(getchar());
         else if (pos == ';')
-            std::cout << "TODO";
+        {
+            int value = 0;
+            scanf("%d", &value);
+            memory_.set_value(value);
+        }
         else if (pos == '<')
         {
             mario_.dir_ = Direction::LEFT;

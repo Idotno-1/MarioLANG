@@ -37,7 +37,7 @@ namespace interpretor
         }
 
         bool load(std::string path);
-        bool play();
+        void play();
         void display();
 
     private:

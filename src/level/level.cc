@@ -23,27 +23,25 @@ namespace interpretor
 
         cf.close();
 
-        board_.resize(max_y - 1);
+        board_.resize(max_y > 0 ? max_y - 1 : 0);
 
         for (size_t i = 0; i < board_.size(); i++)
             board_[i].resize(max_x, ' ');
 
-        return board_.size() || !board_[0].size();
+        return board_.size() || board_[0].size();
     }
 
-    bool Level::play()
+    void Level::play()
     {
         if (!board_.size() || !board_[0].size())
-            return false;
+            return;
 
+        display();
         handle_pos();
         apply_gravity();
 
-        while (true)
-            if (!do_move() || !apply_gravity() || !handle_pos())
-                return false;
-
-        return true;
+        while (do_move() && apply_gravity() && handle_pos())
+            ;
     }
 
     bool Level::is_solid(int y, int x)
@@ -57,8 +55,9 @@ namespace interpretor
 
     bool Level::handle_pos()
     {
-        char pos = board_[mario_.pos_y_][mario_.pos_x_];
+        const char pos = board_[mario_.pos_y_][mario_.pos_x_];
         const std::string tokens = "=|#\")(+-.:,;<>^![@";
+        int value = 0;
 
         if (mario_.skip_ && tokens.find(pos) != std::string::npos)
         {
@@ -66,31 +65,45 @@ namespace interpretor
             return true;
         }
 
-        // FIXME : update to switch
-
-        if (pos == '+')
+        switch (pos)
+        {
+        case '+': // Increment current memory cell
             memory_.increase_value();
-        else if (pos == '-')
+            break;
+
+        case '-': // Decrement current memory cell
             memory_.decrease_value();
-        else if (pos == '(')
+            break;
+
+        case '(': // Move memort pointer left
             memory_.decrease_cursor();
-        else if (pos == ')')
+            break;
+
+        case ')': // Move memort pointer right
             memory_.increase_cursor();
-        else if (pos == '.')
+            break;
+
+        case '.': // Display ascii value
             std::cout << (char)(memory_.get_value() % 256);
-        else if (pos == ':')
+            break;
+
+        case ':': // Display numerical value
             std::cout << memory_.get_value() << ' ';
-        else if (pos == ',')
+            break;
+
+        case ',': // Input ascii value
             memory_.set_value(getchar());
-        else if (pos == ';')
-        {
-            int value = 0;
+            break;
+
+        case ';': // Input numerical value
             scanf("%d", &value);
+
             memory_.set_value(value);
-        }
-        else if (pos == '<')
-        {
+            break;
+
+        case '<': // Go left
             mario_.dir_ = Direction::LEFT;
+
             if (is_solid(mario_.pos_y_ + 1, mario_.pos_x_))
             {
                 display();
@@ -102,10 +115,11 @@ namespace interpretor
                 else
                     return false;
             }
-        }
-        else if (pos == '>')
-        {
+            break;
+
+        case '>': // Go right
             mario_.dir_ = Direction::RIGHT;
+
             if (is_solid(mario_.pos_y_ + 1, mario_.pos_x_))
             {
                 display();
@@ -117,11 +131,14 @@ namespace interpretor
                 else
                     return false;
             }
-        }
-        else if (pos == '!')
+            break;
+
+        case '!': // Stop
             mario_.dir_ = Direction::IDLE;
-        else if (pos == '^')
-        {
+            break;
+
+        case '^': // Jump
+
             mario_.dir_ = Direction::IDLE;
 
             display();
@@ -160,16 +177,21 @@ namespace interpretor
                 mario_.pos_y_++;
                 return false;
             }
-        }
-        else if (pos == '@')
+            break;
+
+        case '@': // Toggle direction
             mario_.toggle_dir();
-        else if (pos == '[')
-        {
+            break;
+
+        case '[': // Skip next if 0
             if (!memory_.get_value())
                 mario_.skip_ = true;
+            break;
+
+        default:
+            if (is_solid(mario_.pos_y_, mario_.pos_x_))
+                return false;
         }
-        else if (is_solid(mario_.pos_y_, mario_.pos_x_))
-            return false;
 
         display();
 
@@ -183,7 +205,7 @@ namespace interpretor
 
         mario_.pos_x_ += mario_.dir_;
 
-        // Elevator
+        // Elevator check
         if (mario_.dir_ == Direction::IDLE
             && board_[mario_.pos_y_ + 1][mario_.pos_x_] == '#')
         {
@@ -250,12 +272,14 @@ namespace interpretor
 
         std::cout << std::endl;
 
+        // Upper boundary
         for (size_t i = 0; i < board_[0].size() + 2; ++i)
             std::cout << (i == board_[0].size() + 1 ? " \x1B[0m\n"
                                                     : "\x1B[100m ");
 
         for (size_t i = 0; i < board_.size(); ++i)
         {
+            // Left boundary
             std::cout << "\x1B[100m \x1B[0m";
 
             for (size_t j = 0; j < board_[i].size(); ++j)
@@ -282,9 +306,11 @@ namespace interpretor
                 std::cout << board_[i][j] << RST;
             }
 
+            // Right boundary
             std::cout << "\x1B[100m \x1B[0m\n";
         }
 
+        // Lower boundary
         for (size_t i = 0; i < board_[0].size() + 2; ++i)
             std::cout << (i == board_[0].size() + 1 ? " \x1B[0m\n"
                                                     : "\x1B[100m ");

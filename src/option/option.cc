@@ -21,7 +21,7 @@ namespace option_parser
                 if (i == argc - 1)
                 {
                     std::cerr << "Missing operand for optional argument "
-                                 "\"-d\"\n. Default selected.";
+                                 "\"-d\". Default selected.\n";
 
                     options.delay_ = -1;
                 }

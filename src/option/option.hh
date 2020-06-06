@@ -14,6 +14,7 @@ namespace option_parser
             display_ = false;
             delay_ = -1;
         }
+
         std::string path_; // REQUIRED
         bool display_; // OPTIONAL
         int delay_; // OPTIONAL

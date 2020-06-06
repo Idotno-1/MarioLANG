@@ -17,7 +17,12 @@ int main(int argc, char* argv[])
     if (level.load(options.value().path_))
         level.play();
     else
-        std::cerr << "Please select a valid file.";
+    {
+        std::cerr << F_RED << "ERROR: \"" << options.value().path_
+                  << "\" is not a valid file." << RST << std::endl;
+
+        return 1;
+    }
 
     return 0;
 }

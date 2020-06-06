@@ -9,7 +9,6 @@ namespace option_parser
         const std::string delay = "-d";
 
         Options options = Options();
-        bool got_required = false;
 
         int i = 1;
         while (i < argc)
@@ -32,16 +31,13 @@ namespace option_parser
                     delay_value >> options.delay_;
                 }
             }
-            else if (!got_required && argv[i][0] != '-')
-            {
-                options.path_ = argv[i];
-                got_required = true;
-            }
+            else if (argv[i][0] != '-')
+                options.paths_.push_back(argv[i]);
 
             ++i;
         }
 
-        if (!got_required)
+        if (options.paths_.size() == 0)
         {
             std::cerr << "Missing required argument \"path\".\n";
             return {};

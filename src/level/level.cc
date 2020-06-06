@@ -2,8 +2,18 @@
 
 namespace interpretor
 {
+    void Level::reset()
+    {
+        memory_ = MemoryBand();
+        mario_ = Mario();
+
+        board_.clear();
+    }
+
     bool Level::load(std::string path)
     {
+        reset();
+
         std::ifstream cf(path);
 
         board_.resize(15);

@@ -38,7 +38,6 @@ namespace interpretor
 
         bool load(std::string path);
         void play();
-        void display();
 
     private:
         Mario mario_;
@@ -46,6 +45,9 @@ namespace interpretor
         std::vector<std::string> board_;
         bool display_;
         int delay_;
+
+        void reset();
+        void display();
 
         bool do_move();
         bool handle_pos();

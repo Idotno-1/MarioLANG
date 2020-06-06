@@ -4,6 +4,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace option_parser
 {
@@ -15,7 +16,7 @@ namespace option_parser
             delay_ = -1;
         }
 
-        std::string path_; // REQUIRED
+        std::vector<std::string> paths_; // ONE REQUIRED
         bool display_; // OPTIONAL
         int delay_; // OPTIONAL
     };
